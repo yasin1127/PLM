@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textViewTitle" type="id"></item>
+    <item name="textViewAuthor" type="id"></item>
+    <item name="textViewPages" type="id"></item>
+    <item name="checkboxRead" type="id"></item>
+</resources>
