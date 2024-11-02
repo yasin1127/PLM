@@ -1,6 +1,8 @@
 package com.example.personallibraryapp
 
+import BookAdapter
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -39,20 +41,24 @@ class MainActivity : AppCompatActivity() {
         binding.buttonAdd.setOnClickListener {
             val title = binding.editTextTitle.text.toString()
             val author = binding.editTextAuthor.text.toString()
-            val pages = binding.editTextPages.text
-            if (title.isNotEmpty() && author.isNotEmpty() && pages==null) {
-                val book =
-                    pages?.let { it1 -> Book(title = title, author = author, pages = it1, isRead = false) }
-                if (book != null) {
+            val pagesString = binding.editTextPages.text.toString() // Get pages as a string
+            if (title.isNotEmpty() && author.isNotEmpty() && pagesString.isNotEmpty()) {
+                val pages = pagesString.toIntOrNull() // Safely convert to Int
+                if (pages != null) {
+                    val book = Book(title = title, author = author, pages = pages, isRead = false)
                     viewModel.insert(book)
-                }
 
-                // Clear the input fields
-                binding.editTextTitle.text.clear()
-                binding.editTextAuthor.text.clear()
-                binding.editTextPages.text.clear()
+                    // Clear the input fields
+                    binding.editTextTitle.text.clear()
+                    binding.editTextAuthor.text.clear()
+                    binding.editTextPages.text.clear()
+                } else {
+                    // Show an error for invalid page number
+                    Toast.makeText(this, "Please enter a valid number of pages", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                // Show an error message (you can implement a Toast or Snackbar)
-                // Toast.makeText(this, "Please fill in all fields correctly", Toast.LENGTH_SHORT).show()
+                // Show an error message for empty fields
+                Toast.makeText(this, "Please fill in all fields correctly", Toast.LENGTH_SHORT).show()
             }
+
         }}}
